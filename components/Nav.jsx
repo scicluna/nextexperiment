@@ -7,22 +7,21 @@ import { useState, useEffect } from 'react'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
-
-    const isUserLoggedIn = true
+    const { data: session } = useSession()
 
     const [providers, setProviders] = useState(null)
     const [toggleDropDown, setToggleDropdown] = useState(false)
 
     useEffect(() => {
-        const setProviders = async () => {
+        const setUpProviders = async () => {
             const response = await getProviders();
             setProviders(response)
         }
-        setProviders()
+        setUpProviders()
     }, [])
 
     return (
-        <nav className='flex justify-between w-full mb-16'>
+        <nav className='flex justify-between w-full mb-16 mt-2'>
             <Link href="/" className='flex gap-2 justify-center items-center'>
                 <Image src="/assets/images/logo.svg" alt="Prompt Logo"
                     width={30} height={30} className='object-contain'
@@ -32,7 +31,7 @@ const Nav = () => {
 
             {/* Desktop Navigation */}
             <div className='sm:flex hidden'>
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className='flex gap-3 md:gap-5'>
                         <Link href="/create-prompt" className='rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'>
                             Create Post
@@ -43,18 +42,19 @@ const Nav = () => {
                         </button>
 
                         <Link href={"/profile"}>
-                            <Image src="/assets/images/logo.svg" width={37} height={37}
+                            <Image src={session?.user.image} width={37} height={37}
                                 className='rounded-full' alt="profile" />
                         </Link>
                     </div>
                 ) : (
                     <>
                         {providers &&
-                            Object.values(providers).map((provider) => {
+                            Object.values(providers).map((provider) => (
                                 <button type="button" key={provider.name} onClick={() => signIn(provider.id)}
                                     className='rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'>
+                                    Sign In
                                 </button>
-                            })
+                            ))
                         }
                     </>
                 )}
@@ -62,9 +62,9 @@ const Nav = () => {
 
             {/* Mobile Navigation */}
             <div className='sm:hidden flex relative'>
-                {isUserLoggedIn ? (
+                {session?.user ? (
                     <div className='flex'>
-                        <Image src="/assets/images/logo.svg" width={37} height={37}
+                        <Image src={session?.user.image} width={37} height={37}
                             className='rounded-full hover:cursor-pointer' alt="profile" onClick={() => setToggleDropdown((prev) => !prev)} />
 
                         {toggleDropDown && (
@@ -89,11 +89,12 @@ const Nav = () => {
                 ) : (
                     <>
                         {providers &&
-                            Object.values(providers).map((provider) => {
+                            Object.values(providers).map((provider) => (
                                 <button type="button" key={provider.name} onClick={() => signIn(provider.id)}
                                     className='rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center'>
+                                    Sign In
                                 </button>
-                            })
+                            ))
                         }
                     </>
                 )}
