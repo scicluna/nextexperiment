@@ -23,7 +23,6 @@ export default function CreatePrompt() {
 
 
         try {
-            console.log(post.prompt, post.tag, session.user.id)
             const response = await fetch('/api/prompt/new', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -41,7 +40,29 @@ export default function CreatePrompt() {
         } finally {
             setSubmitting(false)
         }
+    }
 
+    async function createPrompt(e) {
+        e.preventDefault()
+        setSubmitting(true)
+
+        try {
+            const response = await fetch('/api/prompt/new', {
+                method: 'POST',
+                body: JSON.stringify({
+                    prompt: post.prompt,
+                    userId: session?.user.id,
+                    tag: post.tag
+                })
+            })
+            if (response.ok) {
+                router.push('/')
+            }
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setSubmitting(false)
+        }
     }
 
     return (

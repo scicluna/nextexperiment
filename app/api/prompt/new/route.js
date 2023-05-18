@@ -1,10 +1,8 @@
 import { connectToDB } from "@utils/database";
 import Prompt from "@models/Prompt";
-import { parse } from "postcss";
 
 export const POST = async (req) => {
     const parsedReq = await req.json()
-
     const { userId: creator, prompt, tag } = parsedReq
 
     try {

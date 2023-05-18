@@ -7,7 +7,7 @@ const Home = () => {
             <span className="text-3xl font-extrabold text-red-600"> AI-Powered Prompts</span>
             <div>
                 <p className="text-center text-lg">
-                    Promptopia is a sick af AI prompting tool for the modern world.
+                    Promptopia is an awesome AI prompting tool for the modern world.
                 </p>
             </div>
 
