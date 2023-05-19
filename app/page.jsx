@@ -10,7 +10,6 @@ const Home = () => {
                     Promptopia is an awesome AI prompting tool for the modern world.
                 </p>
             </div>
-
             <Feed />
         </section>
     )

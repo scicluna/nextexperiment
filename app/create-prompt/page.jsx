@@ -19,33 +19,6 @@ export default function CreatePrompt() {
     async function createPrompt(e) {
         e.preventDefault()
         setSubmitting(true)
-
-
-
-        try {
-            const response = await fetch('/api/prompt/new', {
-                method: 'POST',
-                body: JSON.stringify({
-                    prompt: post.prompt,
-                    userId: session?.user.id,
-                    tag: post.tag
-                })
-            })
-
-            if (response.ok) {
-                router.push('/')
-            }
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setSubmitting(false)
-        }
-    }
-
-    async function createPrompt(e) {
-        e.preventDefault()
-        setSubmitting(true)
-
         try {
             const response = await fetch('/api/prompt/new', {
                 method: 'POST',
@@ -64,6 +37,7 @@ export default function CreatePrompt() {
             setSubmitting(false)
         }
     }
+
 
     return (
         <Form

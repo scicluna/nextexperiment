@@ -5,9 +5,22 @@ import PromptCard from "./PromptCard"
 export const Feed = () => {
     const [searchText, setSearchText] = useState('')
     const [posts, setPosts] = useState([])
+    const [filteredPosts, setFilteredPosts] = useState(null)
 
     const handleSearchChange = (e) => {
+        const searchTerm = e.target.value
+        setSearchText(searchTerm)
 
+        if (posts) setFilteredPosts(searchFilter(searchTerm))
+    }
+
+    const searchFilter = (search) => {
+        return posts.filter(post => post?.prompt.toLowerCase().includes(search) || post?.creator.username.toLowerCase().includes(search) || post?.creator.email.toLowerCase().includes(search) || post?.tag.toLowerCase().includes(search))
+    }
+
+    const handleTagClick = (tag) => {
+        setSearchText(tag)
+        setFilteredPosts(searchFilter(tag))
     }
 
     useEffect(() => {
@@ -33,8 +46,8 @@ export const Feed = () => {
                 />
             </form>
             <PromptCardList
-                data={posts}
-                handleTagClick={() => { }}
+                data={filteredPosts || posts}
+                handleTagClick={handleTagClick}
             />
         </section>
     )

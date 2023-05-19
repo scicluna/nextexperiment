@@ -1,3 +1,8 @@
-[] Implement Search
-[] Implement Click on tag
-[] Implement View other profiles
+[X] Implement Search
+    -by prompt content
+    -by tag
+    -by username
+[X] Implement Click on tag
+    -click automatically fills the search bar
+[X] Implement View other profiles
+    - /profile/[id]/[name]?
